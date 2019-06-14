@@ -69,6 +69,8 @@ class Board:
             return True
         elif self.check_column(player):
             return True
+        elif self.check_diagonal(player):
+            return True
         else:
             return self.check_square(player)
 
@@ -109,6 +111,13 @@ class Board:
             return coord == coord_next
 
         return False
+
+    def check_diagonal(self, player: int):
+        state = [x for row in self.state for x in row]
+        indexes = [i for i, x in enumerate(state) if x is player]
+        gap = [t - s for s, t in zip(indexes, indexes[1:])]
+
+        return (gap == [6]*3 and indexes[0] in [0, 1, 5, 6]) or (gap == [4]*3 and indexes[0] in [3, 4, 8, 9])
 
     def select_pawn(self, coord: tuple):
         self.playerWantToMove = True

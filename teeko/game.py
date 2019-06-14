@@ -8,23 +8,42 @@ class Game:
         self.turn = 0
         self.player = randint(1, 2)
         self.interface = None
-        self.game_launched = True
+        self.game_launched = False
 
         if ui:
             Interface(self)
         else:
             self.play()
 
+    def reset(self):
+        self.board = Board()
+        self.turn = 0
+        self.player = randint(1, 2)
+        self.interface.clear_board()
+        self.game_launched = False
+
     def set_interface(self, interface: Interface):
         self.interface = interface
+
+    def launch_game_pvp(self):
+        self.reset()
+        self.game_launched = True
+
+    def launch_game_pvai(self):
+        self.reset()
+        pass
+
+    def launch_game_aivai(self):
+        self.reset()
+        pass
 
     def set_state(self, state: list):
         self.board.set_state(state)
 
     def check(self):
         if self.board.check_for_player(self.player):
-            print('Player {} win !'.format(self.player))
             self.game_launched = False
+            self.interface.show_winner()
 
     def is_not_over(self):
         return not self.board.check()
