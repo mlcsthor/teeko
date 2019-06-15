@@ -30,3 +30,58 @@ def load_image(filename: str, size: tuple = None):
 	if size: image = image.resize(size)
 
 	return ImageTk.PhotoImage(image)
+
+## Thomas
+def getCoord(str):
+	while True:
+		x = int(input(str))
+		if checkCoord(x):
+			break
+		print("Nombre entre 0 et 4 inclus")
+	return x
+
+def checkCoord(x):
+	if 0 <= x < 5 :
+		return True
+	return False
+
+def countPawnAround(x1,y1, state):
+	c = 0
+	for y2 in range(y1-1, y1+2):
+		for x2 in range(x1-1, x1+2):
+			if x1!=x2 and y1!=y2 and checkCoord(x2) and checkCoord(y2) and state[y1][x1] == state[y2][x2]:
+				c = c + 1
+	return c
+
+
+def checkMove(x1, y1, x2, y2, state):
+	if abs(x1 - x2) > 1 or abs(y1 - y2) > 1:
+		return False
+	if state[y2][x2] != 0:
+		return False
+	return True
+
+def move(x1, y1, x2, y2, state, player):
+	state[y1][x1] = 0
+	state[y2][x2] = player
+	return state
+
+
+def isWin(state, player):
+	k = 0
+	while k<25 and state[int((k-(k%5))/5)][k%5]!=player:
+		k = k+1
+	i = int((k-(k%5))/5)
+	j = k%5
+	if i < 4 and j < 4 and state[i][j+1] == state[i+1][j] == state[i+1][j+1] == player: #carré
+		return True
+	elif j < 2 and state[i][j+1] == state[i][j+2] == state[i][j+3] == player: #ligne
+		return True
+	elif i < 2 and state[i+1][j] == state[i+2][j] == state[i+3][j] == player: #colonne
+		return True
+	elif i < 2 and j < 2 and state[i+1][j+1] == state[i+2][j+2] == state[i+3][j+3] == player: #diagonale 
+		return True
+	elif i < 2 and j > 2 and state[i+1][j-1] == state[i+2][j-2] == state[i+3][j-3] == player: #diagonale
+		return True
+	else:
+		return False

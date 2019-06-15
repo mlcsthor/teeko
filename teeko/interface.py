@@ -8,7 +8,6 @@ class Interface:
     def __init__(self, game: teeko):
         self.game = game
         self.game.set_interface(self)
-
         self.pawnPositionDraw = []
         self.potentialMovesDraw = []
 
@@ -131,6 +130,7 @@ class Interface:
             self.canvas.pack()
 
     def show_game(self):
+        print("Show Game")
         self.clear_board()
 
         for i in range(5):
@@ -146,7 +146,8 @@ class Interface:
 
                 if pawn: self.pawnPositionDraw.append(pawn)
 
-                self.canvas.pack()
+        self.canvas.update_idletasks() 
+
 
     def clear_potential_moves(self):
         for pos in self.potentialMovesDraw: self.canvas.delete(pos)
@@ -171,3 +172,4 @@ class Interface:
 
     def show_winner(self):
         showinfo('Fin de partie', 'Le Joueur {} a gagné !'.format(self.game.player))
+        self.game.launched = False

@@ -1,14 +1,19 @@
 from .board import *
 from .interface import *
-from random import randint
+from .ai_alpha_beta import *
+from threading import Thread
+import time
 
 class Game:
     def __init__(self, ui: bool):
+        self.mode = None
         self.board = Board()
         self.turn = 0
-        self.player = randint(1, 2)
+        self.player = 1
         self.interface = None
         self.game_launched = False
+        self.playerAI_1 = None
+        self.playerAI_2 = None
 
         if ui:
             Interface(self)
@@ -18,7 +23,7 @@ class Game:
     def reset(self):
         self.board = Board()
         self.turn = 0
-        self.player = randint(1, 2)
+        self.player = 1
         self.interface.clear_board()
         self.game_launched = False
 
@@ -26,16 +31,38 @@ class Game:
         self.interface = interface
 
     def launch_game_pvp(self):
+        self.mode = 0
         self.reset()
         self.game_launched = True
 
     def launch_game_pvai(self):
+        self.mode = 1
         self.reset()
-        pass
+        self.playerAI_2 = AI_Alpha_Beta(self,2,3)
+        self.game_launched = True
 
     def launch_game_aivai(self):
+        self.mode = 2
         self.reset()
-        pass
+        self.playerAI_1 = AI_Alpha_Beta(self,1,3)
+        self.playerAI_2 = AI_Alpha_Beta(self,2,3)
+        while self.is_not_over():
+            if self.turn%2 == 0: 
+                #self.playerAI_1.play_minmax()
+                #self.next_turn()
+                process = Thread(name="Thread1", target=self.playerAI_1.play_minmax)
+                process.start()
+                process.join()
+                self.next_turn()
+                
+            else:
+                #self.playerAI_2.play_minmax()
+                #self.next_turn()
+                process = Thread(name="Thread2", target=self.playerAI_2.play_minmax)
+                process.start()
+                process.join()
+                self.next_turn()
+                
 
     def set_state(self, state: list):
         self.board.set_state(state)
@@ -99,6 +126,7 @@ class Game:
         self.player = 1 if self.player is 2 else 2
 
     def next_turn(self):
+        print("Next Turn")
         self.interface.show_game()
 
         if not self.interface:
@@ -109,3 +137,9 @@ class Game:
         self.next_player()
 
         self.turn += 1
+        
+        if self.mode == 1 and self.player == 2 and self.is_not_over():
+            self.game_launched = False
+            self.playerAI_2.play_minmax()
+            self.game_launched = True
+            self.next_turn()
