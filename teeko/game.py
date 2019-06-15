@@ -1,7 +1,6 @@
 from .board import *
 from .interface import *
-from .ai_alpha_beta import *
-from threading import Thread
+from .ai import *
 import time
 
 class Game:
@@ -38,31 +37,23 @@ class Game:
     def launch_game_pvai(self):
         self.mode = 1
         self.reset()
-        self.playerAI_2 = AI_Alpha_Beta(self,2,3)
+        self.playerAI_2 = AI(self, 2, 3)
         self.game_launched = True
 
     def launch_game_aivai(self):
         self.mode = 2
         self.reset()
-        self.playerAI_1 = AI_Alpha_Beta(self,1,3)
-        self.playerAI_2 = AI_Alpha_Beta(self,2,3)
+        self.playerAI_1 = AI(self, 1, 3)
+        self.playerAI_2 = AI(self, 2, 3)
         while self.is_not_over():
-            if self.turn%2 == 0: 
-                #self.playerAI_1.play_minmax()
-                #self.next_turn()
-                process = Thread(name="Thread1", target=self.playerAI_1.play_minmax)
-                process.start()
-                process.join()
+            time.sleep(1)
+
+            if self.turn%2 == 0:
+                self.playerAI_1.play_minmax()
                 self.next_turn()
-                
             else:
-                #self.playerAI_2.play_minmax()
-                #self.next_turn()
-                process = Thread(name="Thread2", target=self.playerAI_2.play_minmax)
-                process.start()
-                process.join()
+                self.playerAI_2.play_minmax()
                 self.next_turn()
-                
 
     def set_state(self, state: list):
         self.board.set_state(state)

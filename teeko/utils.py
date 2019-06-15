@@ -32,29 +32,29 @@ def load_image(filename: str, size: tuple = None):
 	return ImageTk.PhotoImage(image)
 
 ## Thomas
-def getCoord(str):
+def get_coord(string):
 	while True:
-		x = int(input(str))
-		if checkCoord(x):
+		x = int(input(string))
+		if check_coord(x):
 			break
 		print("Nombre entre 0 et 4 inclus")
 	return x
 
-def checkCoord(x):
+def check_coord(x):
 	if 0 <= x < 5 :
 		return True
 	return False
 
-def countPawnAround(x1,y1, state):
+def count_pawn_around(x1, y1, state):
 	c = 0
 	for y2 in range(y1-1, y1+2):
 		for x2 in range(x1-1, x1+2):
-			if x1!=x2 and y1!=y2 and checkCoord(x2) and checkCoord(y2) and state[y1][x1] == state[y2][x2]:
+			if x1!=x2 and y1!=y2 and check_coord(x2) and check_coord(y2) and state[y1][x1] == state[y2][x2]:
 				c = c + 1
 	return c
 
 
-def checkMove(x1, y1, x2, y2, state):
+def check_move(x1, y1, x2, y2, state):
 	if abs(x1 - x2) > 1 or abs(y1 - y2) > 1:
 		return False
 	if state[y2][x2] != 0:
@@ -67,7 +67,7 @@ def move(x1, y1, x2, y2, state, player):
 	return state
 
 
-def isWin(state, player):
+def is_win(state, player):
 	k = 0
 	while k<25 and state[int((k-(k%5))/5)][k%5]!=player:
 		k = k+1
