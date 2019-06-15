@@ -37,17 +37,22 @@ class Game:
     def launch_game_pvai(self):
         self.mode = 1
         self.reset()
-        self.playerAI_2 = AI(self, 2, 3)
+        self.interface.ask_difficulty(self.mode)
+
+    def start_game_pvai(self, difficulty_1):
+        self.playerAI_1 = AI(self, 2, difficulty_1)
         self.game_launched = True
 
     def launch_game_aivai(self):
         self.mode = 2
         self.reset()
-        self.playerAI_1 = AI(self, 1, 3)
-        self.playerAI_2 = AI(self, 2, 3)
+        self.interface.ask_difficulty(self.mode)
+        
+    def start_game_aivai(self, difficulty_1, difficulty_2):
+        self.playerAI_1 = AI(self, 1, difficulty_1)
+        self.playerAI_2 = AI(self, 2, difficulty_2)
         while self.is_not_over():
             time.sleep(1)
-
             if self.turn%2 == 0:
                 self.playerAI_1.play_minmax()
                 self.next_turn()
@@ -131,6 +136,6 @@ class Game:
         
         if self.mode == 1 and self.player == 2 and self.is_not_over():
             self.game_launched = False
-            self.playerAI_2.play_minmax()
+            self.playerAI_1.play_minmax()
             self.game_launched = True
             self.next_turn()

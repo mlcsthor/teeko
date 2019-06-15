@@ -1,5 +1,7 @@
 import tkinter
 from tkinter.messagebox import showerror, showinfo
+from .customdialog1 import *
+from .customdialog2 import *
 from teeko import utils, config
 from teeko import game as g
 from PIL import ImageTk
@@ -15,10 +17,10 @@ class Interface:
         self.offsetY = 77
         self.distanceBetweenCircles = 149
 
-        root = self.configure_root()
-        self.set_background(root)
+        self.root = self.configure_root()
+        self.set_background(self.root)
 
-        frame = tkinter.Frame(root)
+        frame = tkinter.Frame(self.root)
         frame.pack(side = tkinter.BOTTOM)
 
         self.canvas = tkinter.Canvas(frame, width=config.WINDOW_WIDTH, height=config.CANVAS_HEIGHT,
@@ -32,7 +34,7 @@ class Interface:
 
         self.canvas.pack()
 
-        root.mainloop()
+        self.root.mainloop()
 
     @staticmethod
     def configure_root():
@@ -165,6 +167,14 @@ class Interface:
         label.photo = image
 
         return self.canvas.create_image(x, y,  image=image)
+
+
+    def ask_difficulty(self, mode):
+        if mode == 1:
+            CustomDialog1(self.root, "Difficulté", 'Choisis un niveau de difficulté', "Facile, pfff", "Plus difficile que 'Facile'", "Non sérieusement,\n laisse tomber", self.game)
+        else:
+            CustomDialog2(self.root, "Difficultés", 'Choisis un niveau de difficulté pour les 2 IA', self.game)
+        
 
     @staticmethod
     def show_error():
