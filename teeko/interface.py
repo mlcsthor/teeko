@@ -1,11 +1,11 @@
 import tkinter
 from tkinter.messagebox import showerror, showinfo
 from teeko import utils, config
-import teeko.game as teeko
+from teeko import game as g
 from PIL import ImageTk
 
 class Interface:
-    def __init__(self, game: teeko):
+    def __init__(self, game: g):
         self.game = game
         self.game.set_interface(self)
         self.pawnPositionDraw = []

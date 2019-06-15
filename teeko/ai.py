@@ -1,9 +1,8 @@
 from random import *
-import teeko.game as teeko
-from teeko import utils
+from teeko import utils, game as g
 
 class AI:
-	def __init__(self, game: teeko, player, depth):
+	def __init__(self, game: g, player, depth):
 		self.game = game
 		self.player = player
 		self.targetDepth = depth
