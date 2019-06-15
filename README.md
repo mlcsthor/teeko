@@ -8,9 +8,16 @@ apt-get install python3-pil.imagetk
 
 pip install Pillow
 #or pip install -r teeko/requirements.txt
+```
 
-python3 teeko/main.py
+## Usage
 
+```bash
+python3 teeko.py
+
+# OR
+
+python3 teeko.py --no-ui
 ```
 
 ## License
