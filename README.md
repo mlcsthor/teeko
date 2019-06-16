@@ -13,11 +13,11 @@ pip install Pillow
 ## Usage
 
 ```bash
-python3 teeko.py
+python3 main.py
 
 # OR
 
-python3 teeko.py --no-ui
+python3 main.py --no-ui
 ```
 
 ## License

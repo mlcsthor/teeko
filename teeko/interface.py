@@ -1,7 +1,7 @@
 import tkinter
 from tkinter.messagebox import showerror, showinfo
-from .singleDifficultyDialog import *
-from .dualDifficultyDialog import *
+from teeko.widget.singleDifficultyDialog import *
+from teeko.widget.dualDifficultyDialog import *
 from teeko import utils, config
 from teeko import game as g
 from PIL import ImageTk
