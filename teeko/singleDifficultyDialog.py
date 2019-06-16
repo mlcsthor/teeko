@@ -1,7 +1,7 @@
 import tkinter as tk
 
-class CustomDialog1(tk.Toplevel):
-    def __init__(self, root, title, message, buttontext1, buttontext2, buttontext3, game):
+class SingleDifficultyDialog(tk.Toplevel):
+    def __init__(self, root, title, message, difficulties, game):
         self.base = tk.Toplevel(pady = 50)
         self.base.title(title)
 
@@ -16,22 +16,17 @@ class CustomDialog1(tk.Toplevel):
 
         self.label = tk.Label(self.base, text=message,font='Helvetica 18 bold')
         self.label.grid(row=0, column=0)
-        
 
         self.scale = tk.Scale(self.base, orient='horizontal', from_=1, to=5, resolution=1, tickinterval=None, length=600)
         self.scale.grid(row=1, column=0, pady = 5)
 
         self.frame = tk.Frame(self.base)
         self.frame.grid(row=3, column=0, pady=10)
-        self.frame.grid_columnconfigure(0, weight=275, uniform="fred")
-        self.frame.grid_columnconfigure(1, weight=275, uniform="fred")
-        self.frame.grid_columnconfigure(2, weight=275, uniform="fred")
-        self.label1 = tk.Label(self.frame, text=buttontext1)
-        self.label1.grid(row=0, column=0)
-        self.label2 = tk.Label(self.frame, text=buttontext2)
-        self.label2.grid(row=0, column=1)
-        self.label3 = tk.Label(self.frame, text=buttontext3)
-        self.label3.grid(row=0, column=2)
+
+        for index, label_text in enumerate(difficulties):
+            self.frame.grid_columnconfigure(index, weight=275, uniform="fred")
+            label = tk.Label(self.frame, text=label_text)
+            label.grid(row=0, column=index)
 
         self.button = tk.Button(self.frame, text="Je valide", command=self.ok, bg='blue',highlightbackground='#3E4149', font='Helvetica 15', padx = 10, pady = 5)
         self.button.grid(row=2, column=1)
@@ -40,9 +35,12 @@ class CustomDialog1(tk.Toplevel):
     def ok(self):
         self.game.start_game_pvai(self.scale.get())
         self.base.destroy()
+
     def baseconfig(self, option, value):
         self.base[option] = value
+
     def labelconfig(self, option, value):
         self.label[option] = value
+
     def buttonconfig(self, number, option, value):
         exec("self.button{}[option] = value".format(number))

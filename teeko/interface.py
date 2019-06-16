@@ -1,7 +1,7 @@
 import tkinter
 from tkinter.messagebox import showerror, showinfo
-from .customdialog1 import *
-from .customdialog2 import *
+from .singleDifficultyDialog import *
+from .dualDifficultyDialog import *
 from teeko import utils, config
 from teeko import game as g
 from PIL import ImageTk
@@ -171,9 +171,15 @@ class Interface:
 
     def ask_difficulty(self, mode):
         if mode == 1:
-            CustomDialog1(self.root, "Difficulté", 'Choisis un niveau de difficulté', "Facile, pfff", "Plus difficile que 'Facile'", "Non sérieusement,\n laisse tomber", self.game)
+            difficulties = [
+                'Facile, pfff',
+                'Plus difficile que \'Facile\'',
+                'Non sérieusement,\n laisse tomber'
+            ]
+
+            SingleDifficultyDialog(self.root, "Difficulté", 'Choisis un niveau de difficulté', difficulties, self.game)
         else:
-            CustomDialog2(self.root, "Difficultés", 'Choisis un niveau de difficulté pour les 2 IA', self.game)
+            DualDifficultyDialog(self.root, "Difficultés", 'Choisis un niveau de difficulté pour les 2 IA', self.game)
         
 
     @staticmethod

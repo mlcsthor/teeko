@@ -1,6 +1,6 @@
 import tkinter as tk
 
-class CustomDialog2(tk.Toplevel):
+class DualDifficultyDialog(tk.Toplevel):
     def __init__(self, root, title, message, game):
         self.base = tk.Toplevel(pady = 50)
         self.base.title(title)
@@ -24,20 +24,26 @@ class CustomDialog2(tk.Toplevel):
 
         self.frame = tk.Frame(self.base)
         self.frame.grid(row=3, column=0, pady=10)
-        self.frame.grid_columnconfigure(0, weight=275, uniform="fred")
-        self.frame.grid_columnconfigure(1, weight=275, uniform="fred")
-        self.frame.grid_columnconfigure(2, weight=275, uniform="fred")
+
+        for i in range(3):
+            self.frame.grid_columnconfigure(i, weight=275, uniform="fred")
        
         self.button = tk.Button(self.frame, text="Je valide", command=self.ok, bg='blue',highlightbackground='#3E4149', font='Helvetica 15', padx = 10, pady = 5)
         self.button.grid(row=3, column=1)
         self.game = game
 
     def ok(self):
-        self.game.start_game_aivai(self.scale1.get(), self.scale2.get())
+        scale1 = self.scale1.get()
+        scale2 = self.scale2.get()
+
         self.base.destroy()
+        self.game.start_game_aivai(scale1, scale2)
+
     def baseconfig(self, option, value):
         self.base[option] = value
+
     def labelconfig(self, option, value):
         self.label[option] = value
+
     def buttonconfig(self, number, option, value):
         exec("self.button{}[option] = value".format(number))
