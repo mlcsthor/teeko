@@ -34,7 +34,7 @@ class CustomDialog2(tk.Toplevel):
 
     def ok(self):
         self.game.start_game_aivai(self.scale1.get(), self.scale2.get())
-        self.destroy()
+        self.base.destroy()
     def baseconfig(self, option, value):
         self.base[option] = value
     def labelconfig(self, option, value):
