@@ -132,7 +132,7 @@ class Interface:
             self.canvas.pack()
 
     def show_game(self):
-        print("Show Game")
+        print("\n# Show Game #\n")
         self.clear_board()
 
         for i in range(5):

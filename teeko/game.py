@@ -122,8 +122,6 @@ class Game:
         self.player = 1 if self.player is 2 else 2
 
     def next_turn(self):
-        print("Next Turn")
-
         if not self.interface:
             self.board.print()
         else:
