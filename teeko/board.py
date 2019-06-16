@@ -51,8 +51,17 @@ class Board:
     def print(self):
         print('\n')
 
+        print(' \ | 0 | 1 | 2 | 3 | 4 |')
+
         for i in range(len(self.state)):
-            print(self.state[i])
+            print('-'*24)
+            line_string = ' {} |'.format(i)
+
+            for j in self.state[i]:
+                char = ' ' if j is 0 else 'x' if j is 1 else 'o'
+                line_string += ' {} |'.format(char)
+
+            print(line_string)
 
         print('\n')
 

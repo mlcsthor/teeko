@@ -14,10 +14,12 @@ pip install Pillow
 
 ```bash
 python3 main.py
+# PvP, PvAI and AIvAI mode
 
 # OR
 
 python3 main.py --no-ui
+# Only for PvP mode
 ```
 
 ## License

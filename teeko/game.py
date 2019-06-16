@@ -90,31 +90,31 @@ class Game:
     def play_placement(self):
         print('Player ' + str(self.player) + '\'s turn ! (Placement - Turn ' + str(self.turn + 1) + ')')
 
-        (x, y) = utils.input_coordinates(1, len(self.board.state))
+        (x, y) = utils.input_coordinates(0, len(self.board.state) - 1)
 
         while not self.board.can_play((x, y)):
             print('You can\'t play here !')
-            (x, y) = utils.input_coordinates(1, len(self.board.state))
+            (x, y) = utils.input_coordinates(0, len(self.board.state) - 1)
 
         self.board.play((x, y), self.player)
 
     def play_moving(self):
         print('Player ' + str(self.player) + '\'s turn ! (Moving - Turn ' + str(self.turn + 1) + ')')
 
-        (x, y) = utils.input_coordinates(1, len(self.board.state))
+        (x, y) = utils.input_coordinates(0, len(self.board.state) - 1)
 
         while not self.board.can_choose((x, y), self.player):
             print('You can\'t choose that !')
-            (x, y) = utils.input_coordinates(1, len(self.board.state))
+            (x, y) = utils.input_coordinates(0, len(self.board.state) - 1)
 
         self.board.select_pawn((x, y))
 
         print('Enter the new coordinates')
-        (new_x, new_y) = utils.input_coordinates(1, len(self.board.state))
+        (new_x, new_y) = utils.input_coordinates(0, len(self.board.state) - 1)
 
         while not self.board.can_move((new_x, new_y)):
             print('You can\'t move here !')
-            (new_x, new_y) = utils.input_coordinates(1, len(self.board.state))
+            (new_x, new_y) = utils.input_coordinates(0, len(self.board.state) - 1)
 
         self.board.move((new_x, new_y), self.player)
 
@@ -123,10 +123,11 @@ class Game:
 
     def next_turn(self):
         print("Next Turn")
-        self.interface.show_game()
 
         if not self.interface:
             self.board.print()
+        else:
+            self.interface.show_game()
 
         self.check()
 
