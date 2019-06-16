@@ -43,6 +43,7 @@ class AI:
 							max_x = x
 							max_y = y
 			self.game.board.state[max_y][max_x] = self.player
+			print("RETOUR Value : {} => [{}][{}]".format(max_,max_y, max_x))
 		else:
 			max_x1 = 0
 			max_y1 = 0
@@ -65,6 +66,7 @@ class AI:
 										max_x2 = x2
 										max_y2 = y2
 			utils.move(max_x1,max_y1,max_x2,max_y2,self.game.board.state,self.player)
+			print("RETOUR Value : {} => [{}][{}]->[{}][{}]".format(max_,max_y1, max_x1, max_y2, max_x2))
 
 
 	def min(self, state, current_depth, alpha, beta, l, m):
@@ -143,7 +145,8 @@ class AI:
 		if utils.is_win(state, current_player):
 			value = 10 + current_depth
 		else: 
-			value = self.weights[y][x] + utils.count_pawn_around(x,y,state)
+			value = utils.count_pawn_around(x,y,state) + self.weights[y][x]
 		if current_player != self.player:
 			value = -1 * value
+		print("Value : {} => [{}][{}]".format(value, y, x))
 		return value

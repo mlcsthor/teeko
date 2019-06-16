@@ -49,7 +49,7 @@ def count_pawn_around(x1, y1, state):
 	c = 0
 	for y2 in range(y1-1, y1+2):
 		for x2 in range(x1-1, x1+2):
-			if x1!=x2 and y1!=y2 and check_coord(x2) and check_coord(y2) and state[y1][x1] == state[y2][x2]:
+			if x1!=x2 or y1!=y2 and check_coord(x2) and check_coord(y2) and state[y2][x2] == state[y1][x1]:
 				c = c + 1
 	return c
 
